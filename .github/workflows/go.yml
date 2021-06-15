@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - addGithubActions
+    tags:
+      - '*'
   pull_request:
     branches:
       - main
