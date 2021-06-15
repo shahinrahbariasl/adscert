@@ -57,7 +57,7 @@ jobs:
         with:
           # tag_name: ${{ github.ref }}
           # release_name: Release ${{ github.ref }}
-          tag_name: ${{ BUILD_NUMBER }}
-          release_name: Release ${{ BUILD_NUMBER }}
+          tag_name: ${{BUILD_NUMBER}}
+          release_name: Release ${{BUILD_NUMBER}}
           draft: false
           prerelease: false
