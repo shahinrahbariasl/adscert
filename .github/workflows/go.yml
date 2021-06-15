@@ -45,6 +45,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Version Builder
+        - uses: einaregilsson/build-number@v3
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -52,8 +56,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           # tag_name: ${{ github.ref }}
-          tag_name: ${GITHUB_REF#refs/tags/}
           # release_name: Release ${{ github.ref }}
-          release_name: Release $SOURCE_NAME
+          tag_name: $BUILD_NUMBER
+          release_name: Release $BUILD_NUMBER
           draft: false
           prerelease: false
