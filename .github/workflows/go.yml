@@ -56,13 +56,13 @@ jobs:
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#release/}
-          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$VERSION" >> $RELEASE_VERSION
       - name: Extract version from branch name (for hotfix branches)
         # if: startsWith(github.event.pull_request.head.ref, 'hotfix/')
         run: |
           BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
           VERSION=${BRANCH_NAME#hotfix/}
-          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$VERSION" >> $RELEASE_VERSION
 
       - name: Create Release
         id: create_release
@@ -74,7 +74,7 @@ jobs:
           # release_name: Release ${{ github.ref }}
           # tag_name: v${{ steps.buildnumber.outputs.build_number }}
           # release_name: Release v${{ steps.buildnumber.outputs.build_number }}
-          tag_name: ${{ env.RELEASE_VERSION }}
-          release_name: ${{ env.RELEASE_VERSION }}
+          tag_name: $RELEASE_VERSION
+          release_name: $env.RELEASE_VERSION
           draft: false
           prerelease: false
