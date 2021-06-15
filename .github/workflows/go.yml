@@ -46,7 +46,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Version Builder
-        - uses: einaregilsson/build-number@v3
+        uses: einaregilsson/build-number@v3
         with:
           token: ${{secrets.GITHUB_TOKEN}}
       - name: Create Release
