@@ -45,11 +45,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Version Builder
-        id: buildnumber
-        uses: einaregilsson/build-number@v3
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
+      # - name: Version Builder
+      #   id: buildnumber
+      #   uses: einaregilsson/build-number@v3
+      #   with:
+      #     token: ${{secrets.GITHUB_TOKEN}}
       
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@master
