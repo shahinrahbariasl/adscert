@@ -11,7 +11,6 @@ on:
       - addGithubActions
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -40,108 +39,19 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-
   release:
-    # name: Create Release
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: Checkout code
-    #     uses: actions/checkout@v2
-    #     # changelog
-    #   - name: Get Changelog
-    #     id: changelog_reader
-    #     uses: mindsers/changelog-reader-action@v1
-    #     with:
-    #       version: ${{ env.CURRENT_VERSION }}
-    #       path: ./CHANGELOG.md
-        # release
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      #   with:
-      #     tag_name: ${{ github.ref }}
-      #     release_name: Release ${{ github.ref }}
-      #     body: |
-      #       Changes in this Release
-      #       - First Change
-      #       - Second Change
-      #     draft: false
-      #     prerelease: false
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-      #   with:
-      #     tag_name: ${{ github.ref }}
-      #     release_name: Release ${{ github.ref }}
-      #     body: ${{ steps.changelog_reader.outputs.log_entry }}
-      #     draft: false
-      #     prerelease: false
     name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Get version from tag
-        id: tag_name
-        run: |
-          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
-        shell: bash
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Get Changelog Entry
-        id: changelog_reader
-        uses: mindsers/changelog-reader-action@v2
-        with:
-          validation_depth: 10
-          version: ${{ steps.tag_name.outputs.current_version }}
-          path: ./CHANGELOG.md
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          # This pulls from the "Get Changelog Entry" step above, referencing it's ID to get its outputs object.
-          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          tag_name: ${{ steps.changelog_reader.outputs.version }}
-          release_name: Release ${{ steps.changelog_reader.outputs.version }}
-          body: ${{ steps.changelog_reader.outputs.changes }}
-          prerelease: ${{ steps.changelog_reader.outputs.status == 'prereleased' }}
-          draft: ${{ steps.changelog_reader.outputs.status == 'unreleased' }}
-
-  # release_notes:
-  #   name: Create Release Notes
-  #   runs-on: ubuntu-latest
-  #   needs: changelog
-  #   steps:
-  #     - name: Get version from tag
-  #       env:
-  #         GITHUB_REF: ${{ github.ref }}
-  #       run: |
-  #         export CURRENT_VERSION=${GITHUB_TAG/refs\/tags\/v/}
-  #         echo "::set-env name=CURRENT_VERSION::$CURRENT_VERSION"
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-  #       with:
-  #         ref: main
-
-  #     - name: Get Changelog Entry
-  #       id: changelog_reader
-  #       uses: mindsers/changelog-reader-action@v1
-  #       with:
-  #         version: ${{ env.CURRENT_VERSION }}
-  #         path: ./CHANGELOG.md
-
-  #     - name: Create Release
-  #       id: create_release
-  #       uses: actions/create-release@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-  #       with:
-  #         tag_name: ${{ github.ref }}
-  #         release_name: Release ${{ github.ref }}
-  #         body: ${{ steps.changelog_reader.outputs.log_entry }}
-  #         draft: false
-  #         prerelease: false
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
