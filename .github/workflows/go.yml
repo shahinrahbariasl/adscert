@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-      - addGithubActions
+      # - addGithubActions
   pull_request:
     branches:
       - main
-      - addGithubActions
+      # - addGithubActions
 
 jobs:
   build:
@@ -55,6 +55,3 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Changelog
-        uses: scottbrenner/generate-changelog-action@master
-        id: Changelog
