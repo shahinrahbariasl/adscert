@@ -50,6 +50,20 @@ jobs:
         uses: einaregilsson/build-number@v3
         with:
           token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Extract version from branch name (for release branches)
+        # if: startsWith(github.event.pull_request.head.ref, 'release/')
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#release/}
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Extract version from branch name (for hotfix branches)
+        # if: startsWith(github.event.pull_request.head.ref, 'hotfix/')
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          VERSION=${BRANCH_NAME#hotfix/}
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -58,7 +72,9 @@ jobs:
         with:
           # tag_name: ${{ github.ref }}
           # release_name: Release ${{ github.ref }}
-          tag_name: v$GITHUB_RUN_NUMBER
-          release_name: Release v$GITHUB_RUN_NUMBER
+          # tag_name: v${{ steps.buildnumber.outputs.build_number }}
+          # release_name: Release v${{ steps.buildnumber.outputs.build_number }}
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
           draft: false
           prerelease: false
