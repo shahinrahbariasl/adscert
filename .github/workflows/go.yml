@@ -1,14 +1,14 @@
-name: Go
+name: CI
 
 on:
   push:
     branches:
       - main
-      # - addGithubActions
+      - addGithubActions
   pull_request:
     branches:
       - main
-      # - addGithubActions
+      - addGithubActions
 
 jobs:
   build:
