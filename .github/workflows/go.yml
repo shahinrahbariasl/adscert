@@ -54,13 +54,13 @@ jobs:
       - name: Extract version from branch name (for release branches)
         # if: startsWith(github.event.pull_request.head.ref, 'release/')
         run: |
-          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          BRANCH_NAME="${{ github.ref }}"
           VERSION=${BRANCH_NAME#release/}
           echo "RELEASE_VERSION=$VERSION" >> $RELEASE_VERSION
       - name: Extract version from branch name (for hotfix branches)
         # if: startsWith(github.event.pull_request.head.ref, 'hotfix/')
         run: |
-          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          BRANCH_NAME="${{ github.ref }}"
           VERSION=${BRANCH_NAME#hotfix/}
           echo "RELEASE_VERSION=$VERSION" >> $RELEASE_VERSION
 
