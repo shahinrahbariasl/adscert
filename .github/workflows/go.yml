@@ -11,7 +11,7 @@ on:
       - addGithubActions
 
 jobs:
-  build:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-  release:
+  release-and-tag:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
