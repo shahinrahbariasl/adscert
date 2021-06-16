@@ -5,9 +5,11 @@ on:
   push:
     branches:
       - main
+      - addBuildAndReleaseActions
   pull_request:
     branches:
       - main
+      - addBuildAndReleaseActions
 
 jobs:
   Build:
@@ -41,7 +43,7 @@ jobs:
   Release:
     name: Create Release
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }} # Only run if on main branch on push event
+    # if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }} # Only run if on main branch on push event
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -55,3 +57,4 @@ jobs:
         uses: anothrNick/github-tag-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
