@@ -67,6 +67,9 @@ The log parser verifier will verify all entries in the log file and output a sum
 go run examples/verifier/log-parser/verifier-parser.go --origin_callsign=ssai-serving.tk --host_callsign=exchange-holding-company.ga --logtostderr --signature_log_file=requests.log
 ```
 
+### Use logger interface
+`./internal/logger` directory holds global logger interface along with a `standard_golang_logger` implementation which is being used as default logger. Default log level is INFO. Using the `SetLoggerImpl()` method in `./internal/logger/logger.go` interface you can implement any custom logger and set it as global logger in your application.
+
 ## Contributing
 Report bugs, request features and suggest improvements [on Github](https://github.com/InteractiveAdvertisingBureau/adscert_server/issues)
 
