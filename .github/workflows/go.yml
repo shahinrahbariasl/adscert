@@ -1,5 +1,6 @@
 name: CI
 
+# https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
     branches:
@@ -42,6 +43,7 @@ jobs:
   Release:
     name: Create Release
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
